@@ -1,6 +1,7 @@
 package org.example
 
 
+
 fun main() {
     println("Добро пожаловать в игру Виселица!")
 
@@ -8,23 +9,44 @@ fun main() {
 
     val chosenWord = words.random()
     val hiddenWord = hideWord(chosenWord)
+
     var currentWord = "*".repeat(chosenWord.length)
 
-    println("Слово для игры: $hiddenWord")
+    var mistakes = 0
+    val maxMistakes = 4
 
-    println("Введите букву:")
-    val input = readLine()?.lowercase()
-    println("Вы ввели: $input")
+    val hangmanStages = listOf(
+        "|",
+        "|\n|",
+        "/--------\n|",
+        "/--------\n|         |\n|         *",
+        "/--------\n|         |\n|         *\n|       /  \\\n|        / \\"
+    )
 
-    if (input != null && input in chosenWord) {
-        currentWord = revealLetter(chosenWord, currentWord, input[0])
-        println("Угаданное слово: $currentWord")
+    while (mistakes < maxMistakes && currentWord != chosenWord) {
+        println("Слово для игры: $hiddenWord")
+        println("Введите букву:")
 
-        if (currentWord == chosenWord) {
-            println("Поздравляем, вы угадали слово!")
+        val input = readLine()?.lowercase()
+//        println("Вы ввели: $input")
+
+        if (input != null && input in chosenWord) {
+            currentWord = revealLetter(chosenWord, currentWord, input[0])
+            println("Угаданное слово: $currentWord")
+
+            if (currentWord == chosenWord) {
+                println("Поздравляем, вы угадали слово: $chosenWord")
+                return
+            }
+        } else {
+            mistakes++
+            println("Неправильная буква. Осталось ошибок: $maxMistakes - $mistakes")
+
+            if (mistakes == maxMistakes) {
+                println("Вы проиграли. Правильное слово: $chosenWord")
+                return
+            }
         }
-    } else {
-        println("Нет такой буквы!")
     }
 
 }
