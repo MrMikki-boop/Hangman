@@ -30,23 +30,26 @@ fun main() {
         val input = readLine()?.lowercase()
 //        println("Вы ввели: $input")
 
-        if (input != null && input in chosenWord) {
-            currentWord = revealLetter(chosenWord, currentWord, input[0])
-            println("Угаданное слово: $currentWord")
-
-            if (currentWord == chosenWord) {
-                println("Поздравляем, вы угадали слово: $chosenWord")
-                return
+        if (input != null && input.length == 1) {
+            if (input[0] in chosenWord) {
+                currentWord = revealLetter(chosenWord, currentWord, input[0])
+                println("Угаданное слово: $currentWord")
+            } else {
+                mistakes++
+                println("Неправильная буква. Осталось ошибок: ${maxMistakes - mistakes}")
+                if (mistakes <= hangmanStages.size) {
+                    println(hangmanStages[mistakes - 1])
+                }
             }
         } else {
-            mistakes++
-            println("Неправильная буква. Осталось ошибок: $maxMistakes - $mistakes")
-
-            if (mistakes == maxMistakes) {
-                println("Вы проиграли. Правильное слово: $chosenWord")
-                return
-            }
+            println("Некорректный ввод. Пожалуйста, введите одну букву.")
         }
+    }
+
+    if (currentWord == chosenWord) {
+        println("Поздравляем! Вы угадали слово: $chosenWord")
+    } else {
+        println("Вы проиграли. Правильное слово: $chosenWord")
     }
 
 }
