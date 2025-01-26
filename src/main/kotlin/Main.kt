@@ -59,7 +59,15 @@ fun main() {
     } else {
         println("Вы проиграли. Правильное слово: $chosenWord")
     }
-    println("Спасибо за игру в Виселицу! До встречи!")
+
+    println("Хотите сыграть ещё раз? (да/нет)")
+    val playAgain = readLine()?.lowercase()
+    Thread.sleep(1000)
+    if (playAgain == "да") {
+        main() // Перезапуск игры
+    } else {
+        println("\nСпасибо за игру в Виселицу! До встречи!")
+    }
 }
 
 fun revealLetter(word: String, currentWord: String, letter: Char): String {
