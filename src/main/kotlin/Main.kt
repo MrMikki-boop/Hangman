@@ -3,7 +3,9 @@ package org.example
 
 
 fun main() {
+    println("Добро пожаловать в игру Виселица!")
     println("Правила игры: угадайте слово, вводя буквы. У вас есть 4 ошибки, после чего игра завершится. Удачи!\n")
+    Thread.sleep(2000)
 
     val words = listOf("альтернатива", "виселица", "компьютер", "программа", "проект", "интерфейс", "класс")
     val chosenWord = words.random()
@@ -26,6 +28,7 @@ fun main() {
         println("Слово для игры: $currentWord")
         println("Введите букву:")
         val input = readLine()?.lowercase()
+        Thread.sleep(500)
 
         if (input == null || input.length != 1) {
             println("Некорректный ввод. Пожалуйста, введите одну букву.")
@@ -44,10 +47,10 @@ fun main() {
 
         if (letter in chosenWord) {
             currentWord = revealLetter(chosenWord, currentWord, letter)
-            println("Вы угадали слово: $currentWord")
+            println("Вы угадали букву: $currentWord")
         } else {
             mistakes++
-            println("Неправильная буква. Осталось ошибок: ${maxMistakes - mistakes}")
+            println("Неправильная буква. Осталось ${maxMistakes - mistakes} попыток.")
             if (mistakes <= hangmanStages.size) {
                 println(hangmanStages[mistakes])
             }
@@ -60,9 +63,9 @@ fun main() {
         println("Вы проиграли. Правильное слово: $chosenWord")
     }
 
-    println("Хотите сыграть ещё раз? (да/нет)")
-    val playAgain = readLine()?.lowercase()
     Thread.sleep(1000)
+    println("\nХотите сыграть ещё раз? (да/нет)")
+    val playAgain = readLine()?.lowercase()
     if (playAgain == "да") {
         main() // Перезапуск игры
     } else {
