@@ -6,10 +6,7 @@ fun main() {
     println("Добро пожаловать в игру Виселица!")
 
     val words = listOf("альтернатива", "виселица", "компьютер", "программа", "проект", "интерфейс", "класс")
-
     val chosenWord = words.random()
-    val hiddenWord = hideWord(chosenWord)
-
     var currentWord = "*".repeat(chosenWord.length)
 
     var mistakes = 0
@@ -24,11 +21,10 @@ fun main() {
     )
 
     while (mistakes < maxMistakes && currentWord != chosenWord) {
-        println("Слово для игры: $hiddenWord")
+        println("Слово для игры: $currentWord")
         println("Введите букву:")
 
         val input = readLine()?.lowercase()
-//        println("Вы ввели: $input")
 
         if (input != null && input.length == 1) {
             if (input[0] in chosenWord) {
@@ -38,7 +34,7 @@ fun main() {
                 mistakes++
                 println("Неправильная буква. Осталось ошибок: ${maxMistakes - mistakes}")
                 if (mistakes <= hangmanStages.size) {
-                    println(hangmanStages[mistakes - 1])
+                    println(hangmanStages[mistakes])
                 }
             }
         } else {
@@ -51,7 +47,6 @@ fun main() {
     } else {
         println("Вы проиграли. Правильное слово: $chosenWord")
     }
-
 }
 
 fun hideWord(word: String): String {
