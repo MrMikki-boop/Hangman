@@ -8,6 +8,7 @@ fun main() {
 
     val chosenWord = words.random()
     val hiddenWord = hideWord(chosenWord)
+    var currentWord = "*".repeat(chosenWord.length)
 
     println("Слово для игры: $hiddenWord")
 
@@ -16,14 +17,28 @@ fun main() {
     println("Вы ввели: $input")
 
     if (input != null && input in chosenWord) {
-        println("Есть такая буква!")
+        currentWord = revealLetter(chosenWord, currentWord, input[0])
+        println("Угаданное слово: $currentWord")
+
+        if (currentWord == chosenWord) {
+            println("Поздравляем, вы угадали слово!")
+        }
     } else {
         println("Нет такой буквы!")
     }
-
 
 }
 
 fun hideWord(word: String): String {
     return word.replaceRange(0, word.length, "*".repeat(word.length))
+}
+
+fun revealLetter(word: String, currentWord: String, letter: Char): String {
+    val updateWord = currentWord.toCharArray()
+    for (i in word.indices) {
+        if (word[i] == letter) {
+            updateWord[i] = letter
+        }
+    }
+    return String(updateWord)
 }
